@@ -1,0 +1,35 @@
+package hr.ferit.moodtracker.data.local
+
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import hr.ferit.moodtracker.data.ActivityEntry
+import hr.ferit.moodtracker.data.HappyPhoto
+import hr.ferit.moodtracker.data.MoodEntry
+
+@Database(entities = [MoodEntry::class, ActivityEntry::class, HappyPhoto::class], version = 4, exportSchema = false)
+@TypeConverters(Converters::class)
+abstract class MoodDatabase : RoomDatabase() {
+    abstract fun moodDao(): MoodDao
+
+    companion object {
+        @Volatile
+        private var INSTANCE: MoodDatabase? = null
+
+        fun getDatabase(context: Context): MoodDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    MoodDatabase::class.java,
+                    "mood_database"
+                )
+                .fallbackToDestructiveMigration()
+                .build()
+                INSTANCE = instance
+                instance
+            }
+        }
+    }
+}

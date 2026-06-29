@@ -1,11 +1,18 @@
 package hr.ferit.moodtracker.data
 
-import com.google.firebase.Timestamp
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import hr.ferit.moodtracker.data.local.Converters
+import java.util.Date
+import java.util.UUID
 
+@Entity(tableName = "activity_entries")
+@TypeConverters(Converters::class)
 data class ActivityEntry(
-    val id: String = "",
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val userId: String = "",
-    val activityType: String = "", // e.g., "Walking", "Running"
+    val activityType: String = "",
     val durationMinutes: Int = 0,
-    val timestamp: Timestamp = Timestamp.now()
+    val timestamp: Date = Date()
 )

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -47,12 +48,16 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.kotlinx.coroutines.play.services)
 
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
-    implementation(libs.firebase.storage)
+
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     implementation(libs.coil.compose)
     implementation(libs.coil.network)
     testImplementation(libs.junit)

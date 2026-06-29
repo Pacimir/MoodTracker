@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.*
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import hr.ferit.moodtracker.ui.navigation.MoodNavigation
 import hr.ferit.moodtracker.ui.screens.LoginScreen
@@ -14,25 +13,21 @@ import hr.ferit.moodtracker.ui.theme.MoodTrackerTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
         enableEdgeToEdge()
         setContent {
             MoodTrackerTheme {
-                var currentUser by remember { mutableStateOf(FirebaseAuth.getInstance().currentUser) }
+                val auth = FirebaseAuth.getInstance()
+                var currentUser by remember { mutableStateOf(auth.currentUser) }
                 
-                DisposableEffect(Unit) {
-                    val listener = FirebaseAuth.AuthStateListener { auth ->
-                        currentUser = auth.currentUser
-                    }
-                    FirebaseAuth.getInstance().addAuthStateListener(listener)
-                    onDispose {
-                        FirebaseAuth.getInstance().removeAuthStateListener(listener)
+                LaunchedEffect(Unit) {
+                    auth.addAuthStateListener { 
+                        currentUser = it.currentUser
                     }
                 }
-                
+
                 if (currentUser == null) {
                     LoginScreen(onLoginSuccess = {
-                        currentUser = FirebaseAuth.getInstance().currentUser
+                        // Korisnik će se automatski osvježiti preko AuthStateListener-a
                     })
                 } else {
                     MoodNavigation()
