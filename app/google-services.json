@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "569939283552",
+    "project_id": "moodtraker-13d4e",
+    "storage_bucket": "moodtraker-13d4e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569939283552:android:9265ca81f3c67209093d05",
+        "android_client_info": {
+          "package_name": "hr.ferit.moodtracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpNgAem3hfpnYMgLTdV9kyHvqgqSloS4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
